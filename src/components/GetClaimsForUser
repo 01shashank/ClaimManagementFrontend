@@ -1,0 +1,59 @@
+import React, { Component } from 'react';
+import GetClaimsForUserService from '../services/GetClaimsForUserService';
+
+class GetClaimsForUser extends Component {
+    constructor(props){
+        super(props)
+
+        this.state = {
+            claims: []
+        }
+    }
+
+    componentDidMount(){
+        
+        GetClaimsForUserService.getClaims().then((response) =>{
+            this.setState({claims:response.data});
+            
+        });
+    }
+
+        render() {
+            return (
+                
+                <div>
+                <h2 className='text-center'>Claims list</h2>
+                <div className='row'>
+                    <table className='table table-striped table-bordered'>
+                        <thead>
+    
+                            <tr>
+                                <th>Policy name</th>
+                                <th>Insured Details</th>
+                                <th>Hosptalization Details</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+    
+                        // <tbody>
+                        //     {
+                        //         this.state.claims.map(
+                        //             claim =>
+                        //             <tr key={claim.claim_id}>
+                        //                 <td>Policy_name: {claim.policy.policy_name} <br/>Policy_coverage: {claim.policy.policy_coverage} <br/>Policy_premium: {claim.policy.policy_premium}</td>
+                        //                 <td>Insured_Person: {claim.insured.insured_name} <br/>Age: {claim.insured.insured_age}<br/> Phone: {claim.insured.insured_phone}<br/> Relationship:{claim.insured.insured_relationship}</td>
+                        //                 <td>Doctor_consulted: {claim.hospitalization.hospital_doctor} <br/>Medical_expenses: {claim.hospitalization.hospital_medical_expenses} <br/>Non_medical_expenses: {claim.hospitalization.hospital_non_medical_expenses}<br/> Reason:{claim.hospitalization.hospital_reason}</td>
+                        //                 <td>{claim.claim_status}</td>
+                        //             </tr>
+                        //         )
+                        //     }
+                        // </tbody>
+                    </table>
+    
+                </div>
+            </div>
+            );
+        }
+}
+
+export default GetClaimsForUser;

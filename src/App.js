@@ -4,22 +4,19 @@ import Error from './components/Error';
 import Login from './components/Login';
 import { Router,Route,Routes } from 'react-router-dom';
 import GetAllClaims from './components/GetAllClaims';
+import GetClaimsForUser from './components/GetClaimsForUser'
+import Header from './components/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Logout from './components/logout';
+import authenticationService from './services/authenticationService';
+import ClaimManagement from './components/ClaimManagement';
 
 function App() {
+  
+  
   return (
     <div className="container">
-      
-      <Routes>
-        <Route path='/' exact element={<Error/>}/>
-        <Route element={<Error/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path ='/error' element={<Error/>}/>
-        <Route path ='/getallclaims' element={<GetAllClaims/>}/>
-        
-      </Routes>
-      
-      
-    
+      <ClaimManagement/>
     </div>
   );
 }
