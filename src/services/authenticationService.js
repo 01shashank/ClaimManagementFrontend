@@ -5,14 +5,20 @@ class authenticationService{
 
     removeSuccesfulUser(){
         sessionStorage.removeItem('authenticateduser')
+        
     }
 
     isUserloggedIn(){
         let User = sessionStorage.getItem('authenticateduser')
         if(User===null) return false
-        return true
+            return true
+    }
 
+    getLoggedUsername(){
+        let User = sessionStorage.getItem('authenticateduser')
+        if(User===null) return ''
+            return User
     }
 }
 
-export default new authenticationService;
+export default new authenticationService();

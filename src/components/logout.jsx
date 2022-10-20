@@ -1,16 +1,19 @@
-import { useNavigate, useEffect, Link } from "react-router-dom";
-import authenticationService from "../services/authenticationService";
+import { useNavigate } from "react-router-dom";
+import AuthenticationService from "../services/AuthenticationService";
 
 const Logout=()=>{
+    const navigate = useNavigate()
+    function logoutUser(){
+        AuthenticationService.removeSuccesfulUser(); 
+        navigate("/login")
+        window.location.reload() 
+    }
+    
     return(
-        
         <div className='container text-center'>
-                <h3 className="mb-3 mt-5"> Are you sure you want to Logout?</h3>
-                <button ><Link className="btn btn-primary" to="/login" onClick={authenticationService.removeSuccesfulUser}>Logout</Link></button>
-            </div>
-        
-      
-
+            <h3 className="mb-3 mt-5"> Are you sure you want to Logout?</h3>
+            <button className="btn btn-danger" onClick={logoutUser}>Logout</button>    
+        </div>
     );
 }
 
