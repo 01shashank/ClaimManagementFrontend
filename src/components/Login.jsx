@@ -11,7 +11,7 @@ const Login =(props)=>{
   
     
   function loginClicked(props){
-    if(username==='spsangale@gmail.com' && password==='shashank@123')
+    if(username==='yogeshf@gmail.com' && password==='yogesh@123')
       {
         console.log('Login Succesfull');
         AuthenticationService.registerSuccesfulUser(username,password);

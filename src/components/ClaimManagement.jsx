@@ -6,6 +6,7 @@ import Header from './Header';
 import { Route,Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import GetUserClaims from './GetUserClaims';
+import SaveClaim from './SaveClaim';
 
 class ClaimManagement extends Component {
 
@@ -20,6 +21,7 @@ class ClaimManagement extends Component {
                             <Route path ='/getallclaims' element={<GetAllClaims/>}/>
                             <Route path = "/logout" element={<Logout/>}/>
                             <Route path="/getuserclaims" element={<GetUserClaims/>}/>
+                            <Route path="/saveclaim" element={<SaveClaim/>}/>
                         </Route>
                         <Route path="/login" element={<Login/>}/>
                         
