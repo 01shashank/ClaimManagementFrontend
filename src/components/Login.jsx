@@ -11,7 +11,7 @@ const Login =(props)=>{
   
     
   function loginClicked(props){
-    if(username==='jigneshj@gmail.com' && password==='jignesh@123')
+    if(username==='spsangale@gmail.com' && password==='shashank@123')
       {
         console.log('Login Succesfull');
         AuthenticationService.registerSuccesfulUser(username,password);
@@ -58,8 +58,8 @@ const Login =(props)=>{
 }
 
 export const setupAuthenticationInterceptor=()=>{
-  let username ='jigneshj@gmail.com'
-  let password= 'jignesh@123'
+  let username ='spsangale@gmail.com'
+  let password= 'shashank@123'
   let basicAuthHeader= 'Basic ' + window.btoa(username + ":" + password)
 
   axios.interceptors.request.use(

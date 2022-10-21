@@ -20,7 +20,7 @@ class Header extends Component {
                         <div className='container-fluid'>
                             <div className=' navbar-brand'><h3>Claim Management</h3></div>
                             <ul className='navbar-nav'>
-                                {this.state.isUserLogged&&<li className='nav-item'><Link className='nav-link active' to="">Your Claims</Link></li>}
+                                {this.state.isUserLogged&&<li className='nav-item'><Link className='nav-link active' to="/getuserclaims">Your Claims</Link></li>}
                                 {this.state.isUserLogged&&<li className='nav-item'><Link  className='nav-link active' to="">Apply for a claim</Link></li>}
                             </ul>
                             <div className='navbar-nav navbar-collapse justify-content-end'>
