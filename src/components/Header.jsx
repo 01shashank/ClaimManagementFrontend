@@ -21,7 +21,7 @@ class Header extends Component {
                             <div className=' navbar-brand'><h3>Claim Management</h3></div>
                             <ul className='navbar-nav'>
                                 {this.state.isUserLogged&&<li className='nav-item'><Link className='nav-link active' to="/getuserclaims">Your Claims</Link></li>}
-                                {this.state.isUserLogged&&<li className='nav-item'><Link  className='nav-link active' to="/saveclaim">Make a claim</Link></li>}
+                                {this.state.isUserLogged&&<li className='nav-item'><Link  className='nav-link active' to="/savec">Make a claim</Link></li>}
                             </ul>
                             <div className='navbar-nav navbar-collapse justify-content-end'>
                                 {this.state.isUserLogged&&<button className="btn btn-default" ><Link to="/logout">Logout</Link></button>}
