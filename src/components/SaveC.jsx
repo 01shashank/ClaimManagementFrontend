@@ -3,13 +3,16 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import AuthenticationService from '../services/AuthenticationService';
 import { Dropdown } from 'react-bootstrap';
-import PolicyList from './PolicyList';
+import Select from "react-select"
+import { setupAuthenticationInterceptor } from './Login';
+
+
 
 const SaveC =(props)=>{
   const navigate = useNavigate();
 
   const[claim,setClaim] = useState({
-      policy:{policy_name:""},
+      policy:{policy_Id:0},
       insured:{
           insured_name:"",
           insured_phone:0,
@@ -24,16 +27,6 @@ const SaveC =(props)=>{
       }
   });
 
-  const onChnagePolicyName=(e)=>{
-    //   setClaim({
-    //       ...claim,
-    //       policy:{
-    //           ...claim.policy,
-    //           [e.target.name]:e.target.value
-    //       }
-    //   });
-    console.log(PolicyList)
-  }
 
   const onChnageInsuredName=(e)=>{
     setClaim({
@@ -50,7 +43,7 @@ const onChnageInsuredPhone=(e)=>{
         ...claim,
         insured:{
             ...claim.insured,
-            [e.target.name]:e.target.value
+            [e.target.name]:parseInt( e.target.value)
         }
     });
 }
@@ -60,7 +53,7 @@ const onChnageInsuredAge=(e)=>{
         ...claim,
         insured:{
             ...claim.insured,
-            [e.target.name]:e.target.value
+            [e.target.name]:parseInt( e.target.value)
         }
     });
 }
@@ -100,9 +93,10 @@ const onChnageHospitalNonMedExp=(e)=>{
         ...claim,
         hospitalization:{
             ...claim.hospitalization,
-            [e.target.name]:e.target.value
+            [e.target.name]:parseInt( e.target.value)
         }
     });
+
 }
 
 const onChnageHospitalMedExp=(e)=>{
@@ -110,15 +104,32 @@ const onChnageHospitalMedExp=(e)=>{
         ...claim,
         hospitalization:{
             ...claim.hospitalization,
-            [e.target.name]:e.target.value
+            [e.target.name]:parseInt( e.target.value)
         }
     });
 }
-  
-  
+
+
     
   function submitClicked(props){
+    let username=AuthenticationService.getLoggedUsername()
+    console.log(username)
     console.log(claim)
+    console.log(typeof claim.policy.policy_Id)
+    const POST_CLAIM_URL = `http://localhost:9090/saveclaim/${username}`;
+
+    setupAuthenticationInterceptor()
+    axios.post(POST_CLAIM_URL,claim)
+      .then((response) => {
+        console.log(response.data);
+          // Handle data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      navigate("/getuserclaims")
+      window.location.reload()
+    
   }
 
   return (
@@ -148,19 +159,17 @@ const onChnageHospitalMedExp=(e)=>{
 
         <div className='mt-3'><h4>Policy details</h4>
             <div >
-                <label> Policy Name</label>
-                    {/* <Dropdown className='mt-2'>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Select the policy
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                            <Dropdown.Item name="policy_name" value={claim.policy.policy_name}>Standard Plan</Dropdown.Item>
-                            <Dropdown.Item name="policy_name" value={claim.policy.policy_name}>Gold Plan</Dropdown.Item>
-                            <Dropdown.Item name="policy_name" value={claim.policy.policy_name}>Premium Plan</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown> */}
-                    <PolicyList onClick={onChnagePolicyName}/>
+                <label> Policy Name</label> 
+                <div className='row'>
+                    <div className='form-group col-6'> 
+                        <select onChange={(ddl=>setClaim({...claim,policy:{...claim.policy,policy_Id:parseInt(ddl.target.value)}}))}>
+                            <option disabled selected={true}>Select a policy</option>
+                            <option label='Standard Plan' value="1">Standard Plan</option>
+                            <option label='Gold Plan' value="2">Gold Plan</option>
+                            <option label='Premium Plan' value="3">Premium Plan</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             
         </div>

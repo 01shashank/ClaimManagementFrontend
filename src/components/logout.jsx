@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../services/AuthenticationService";
+import GetUserClaims from "./GetUserClaims";
 
 const Logout=()=>{
     const navigate = useNavigate()
@@ -12,7 +13,7 @@ const Logout=()=>{
     return(
         <div className='container text-center'>
             <h3 className="mb-3 mt-5"> Are you sure you want to Logout?</h3>
-            <button className="btn btn-danger" onClick={logoutUser}>Logout</button>    
+            <button className="btn btn-danger" onClick={logoutUser}>Logout</button>  
         </div>
     );
 }

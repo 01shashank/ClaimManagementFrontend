@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import GetAllClaimsService from '../services/GetAllClaimsService';
+import { Link } from 'react-router-dom';
+let cl=0;
 
 class GetAllClaims extends Component {
     constructor(props){
@@ -15,6 +17,15 @@ class GetAllClaims extends Component {
             
         });
     }
+
+    returnClaimId=(claim_id)=>{
+        cl = claim_id;
+       this.getUserSingleClaim()
+    }
+
+    getUserSingleClaim(){return cl;}
+
+     
 
 
     render() {
@@ -38,7 +49,7 @@ class GetAllClaims extends Component {
                             this.state.claims.map(
                                 claim =>
                                 <tr key={claim.claim_id}>
-                                    <td>Insured_Person: {claim.insured.insured_name} <br/>Age: {claim.insured.insured_age}<br/> Phone: {claim.insured.insured_phone}<br/> Relationship:{claim.insured.insured_relationship}</td>
+                                    <td  onClick={()=>this.returnClaimId(claim.claim_id)}><Link to="/claim">Insured_Person: {claim.insured.insured_name} <br/>Age: {claim.insured.insured_age}<br/> Phone: {claim.insured.insured_phone}<br/> Relationship:{claim.insured.insured_relationship}</Link></td>
                                     <td>Doctor_consulted: {claim.hospitalization.hospital_doctor} <br/>Medical_expenses: {claim.hospitalization.hospital_medical_expenses} <br/>Non_medical_expenses: {claim.hospitalization.hospital_non_medical_expenses}<br/> Reason:{claim.hospitalization.hospital_reason}</td>
                                     <td>Policy_name: {claim.policy.policy_name} <br/>Policy_coverage: {claim.policy.policy_coverage} <br/>Policy_premium: {claim.policy.policy_premium}</td>
                                     <td>{claim.claim_status}</td>

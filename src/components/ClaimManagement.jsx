@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import GetUserClaims from './GetUserClaims';
 import SaveClaim from './SaveClaim';
 import SaveC from './SaveC';
+import GetSingleClaim from './GetSingleClaim';
 
 class ClaimManagement extends Component {
 
@@ -24,6 +25,7 @@ class ClaimManagement extends Component {
                             <Route path="/getuserclaims" element={<GetUserClaims/>}/>
                             <Route path="/saveclaim" element={<SaveClaim/>}/>
                             <Route path="/savec" element={<SaveC/>}/>
+                            <Route path="/claim" element={<GetSingleClaim/>}/>
                         </Route>
                         <Route path="/login" element={<Login/>}/>
                         
