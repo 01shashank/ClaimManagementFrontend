@@ -10,12 +10,13 @@ class Header extends Component {
         }
     }
     componentDidMount(){
-        console.log(this.state.isUserLogged)
         this.setState({isUserLogged:AuthenticationService.isUserloggedIn()});
+       
 }
     render() {
             return (
                 <div>
+                    
                     <nav className='navbar navbar-expand-lg navbar-dark bg-dark mt-3'>
                         <div className='container-fluid'>
                             <div className=' navbar-brand'><h3>Claim Management</h3></div>

@@ -1,3 +1,4 @@
+
 class authenticationService{
     registerSuccesfulUser(username,password){
         sessionStorage.setItem('authenticateduser',username)
@@ -19,6 +20,9 @@ class authenticationService{
         if(User===null) return ''
             return User
     }
+
 }
+
+
 
 export default new authenticationService();

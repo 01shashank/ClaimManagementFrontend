@@ -37,12 +37,11 @@ class GetUserClaims extends Component {
         this.getUserSingleClaim()
      }
 
-     getUserSingleClaim(){return cl;}
+     getUserSingleClaim(){console.log(cl);return cl;}
 
       
 
     render(){
-        //console.log(this.state.user_claim)
         return(
         <div>
         
@@ -65,7 +64,7 @@ class GetUserClaims extends Component {
                                     <td onClick={()=>this.returnClaimId(claim.claim_id)}><Link to="/claim">{claim.insured.insured_name} <br/>Age: {claim.insured.insured_age}<br/> Phone: {claim.insured.insured_phone}<br/> Relationship:{claim.insured.insured_relationship}</Link> </td>
                                     <td>Doctor_consulted: {claim.hospitalization.hospital_doctor} <br/>Medical_expenses: {claim.hospitalization.hospital_medical_expenses} <br/>Non_medical_expenses: {claim.hospitalization.hospital_non_medical_expenses}<br/> Reason:{claim.hospitalization.hospital_reason}</td>
                                     <td>Policy_name: {claim.policy.policyName} <br/>Policy_coverage: {claim.policy.policy_coverage} <br/>Policy_premium: {claim.policy.policy_premium}</td>
-                                    <td>{claim.claim_status}</td>
+                                    <td><b>{claim.claim_status}</b></td>
                                 </tr>
                             )      
                     }
@@ -73,7 +72,6 @@ class GetUserClaims extends Component {
                 </table>
             </div>
         </div>
-        {console.log(this.state.user_claim)}
     
         </div>
         

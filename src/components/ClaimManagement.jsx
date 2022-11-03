@@ -6,9 +6,10 @@ import Header from './Header';
 import { Route,Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import GetUserClaims from './GetUserClaims';
-import SaveClaim from './SaveClaim';
 import SaveC from './SaveC';
 import GetSingleClaim from './GetSingleClaim';
+import GetAllUsers from './GetAllUsers';
+import Test from './Test';
 
 class ClaimManagement extends Component {
 
@@ -23,9 +24,10 @@ class ClaimManagement extends Component {
                             <Route path ='/getallclaims' element={<GetAllClaims/>}/>
                             <Route path = "/logout" element={<Logout/>}/>
                             <Route path="/getuserclaims" element={<GetUserClaims/>}/>
-                            <Route path="/saveclaim" element={<SaveClaim/>}/>
                             <Route path="/savec" element={<SaveC/>}/>
                             <Route path="/claim" element={<GetSingleClaim/>}/>
+                            <Route path="/getallusers" element={<GetAllUsers/>}/>
+                            <Route path="/test" element={<Test/>}/>
                         </Route>
                         <Route path="/login" element={<Login/>}/>
                         

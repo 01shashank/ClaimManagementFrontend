@@ -5,12 +5,13 @@ import AuthenticationService from '../services/AuthenticationService';
 import { Dropdown } from 'react-bootstrap';
 import Select from "react-select"
 import { setupAuthenticationInterceptor } from './Login';
+import DocumentService from '../services/DocumentService'
 
 
 
 const SaveC =(props)=>{
   const navigate = useNavigate();
-
+  const[doc,setDoc] = useState({});
   const[claim,setClaim] = useState({
       policy:{policy_Id:0},
       insured:{
@@ -109,28 +110,46 @@ const onChnageHospitalMedExp=(e)=>{
     });
 }
 
-
     
-  function submitClicked(props){
+  const submitClicked=(e)=>{
     let username=AuthenticationService.getLoggedUsername()
-    console.log(username)
-    console.log(claim)
-    console.log(typeof claim.policy.policy_Id)
+    // let file = e.target.files[0];
+    // console.log(file);
+    // console.log(username)
+    // console.log(claim)
+    // console.log(typeof claim.policy.policy_Id)
+    //console.log(claim)
     const POST_CLAIM_URL = `http://localhost:9090/saveclaim/${username}`;
+    
 
     setupAuthenticationInterceptor()
-    axios.post(POST_CLAIM_URL,claim)
+    axios.post(POST_CLAIM_URL,claim
+    )
       .then((response) => {
-        console.log(response.data);
-          // Handle data
+        //console.log(response.data);
+        let claim1= response.data;
+        console.log(claim1)
+        axios.post(`http://localhost:9090/savedoc/${claim1.claim_id}`,doc,{
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response)=>console.log(response.data))
+        .catch((error)=>console.log(error))
       })
       .catch((error) => {
         console.log(error);
       });
+
+      
       navigate("/getuserclaims")
+
+      
       window.location.reload()
     
   }
+
+
 
   return (
     <form className='form-inline'>
@@ -162,7 +181,7 @@ const onChnageHospitalMedExp=(e)=>{
                 <label> Policy Name</label> 
                 <div className='row'>
                     <div className='form-group col-6'> 
-                        <select onChange={(ddl=>setClaim({...claim,policy:{...claim.policy,policy_Id:parseInt(ddl.target.value)}}))}>
+                        <select onChange={(e=>setClaim({...claim,policy:{...claim.policy,policy_Id:parseInt(e.target.value)}}))}>
                             <option disabled selected={true}>Select a policy</option>
                             <option label='Standard Plan' value="1">Standard Plan</option>
                             <option label='Gold Plan' value="2">Gold Plan</option>
@@ -193,6 +212,24 @@ const onChnageHospitalMedExp=(e)=>{
                 <div className='form-group col-6'> 
                     <label>Non-Medical Expenses</label>
                     <input type="number" name="hospital_non_medical_expenses" value={claim.hospitalization.hospital_non_medical_expenses} onChange={onChnageHospitalNonMedExp} className="form-control input-group-lg reg_name"  placeholder="Enter the total Non-Medical Expenses"/>
+                </div>
+            </div>
+            <div className='row mt-3'>
+            <div className='col-6'>
+            <h4>Documents </h4> 
+                <label className="form-label" for="customFile">(only pdf and word files are allowed)</label>
+                <input type="file" onChange={(e)=>
+                 {
+                    const formData = new FormData()
+                    if(e.target.files[0]){
+                    formData.append('file',e.target.files[0])
+                    for (var key of formData.entries()) {
+                        console.log(key[0] + ', ' + key[1])}
+                    setDoc(formData);
+                    }
+                     
+                 } 
+                }  />
                 </div>
             </div>
             <div className="button-container text-center mt-3 mb-3">
