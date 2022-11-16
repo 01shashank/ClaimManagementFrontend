@@ -1,7 +1,11 @@
 
 class authenticationService{
+    
     registerSuccesfulUser(username,password){
+        
+        
         sessionStorage.setItem('authenticateduser',username)
+        
     }
 
     removeSuccesfulUser(){
@@ -20,6 +24,14 @@ class authenticationService{
         if(User===null) return ''
             return User
     }
+
+    // isUserAdmin(){
+    //     console.log(role);
+    //     if(role==="ADMIN"){
+    //         return false;
+    //     }
+    //     else return true;
+    // }
 
 }
 

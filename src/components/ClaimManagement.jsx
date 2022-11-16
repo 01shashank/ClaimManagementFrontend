@@ -10,6 +10,7 @@ import SaveC from './SaveC';
 import GetSingleClaim from './GetSingleClaim';
 import GetAllUsers from './GetAllUsers';
 import Test from './Test';
+import AddAUser from './AddAUser'
 
 class ClaimManagement extends Component {
 
@@ -27,9 +28,11 @@ class ClaimManagement extends Component {
                             <Route path="/savec" element={<SaveC/>}/>
                             <Route path="/claim" element={<GetSingleClaim/>}/>
                             <Route path="/getallusers" element={<GetAllUsers/>}/>
-                            <Route path="/test" element={<Test/>}/>
+                            <Route path="/test" element={<Test />}/>
+                            
                         </Route>
                         <Route path="/login" element={<Login/>}/>
+                        <Route path="/addauser" element={<AddAUser />}/>
                         
                     </Routes>
                     </Fragment>

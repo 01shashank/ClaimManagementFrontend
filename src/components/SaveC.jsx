@@ -127,6 +127,7 @@ const onChnageHospitalMedExp=(e)=>{
     )
       .then((response) => {
         //console.log(response.data);
+        
         let claim1= response.data;
         console.log(claim1)
         axios.post(`http://localhost:9090/savedoc/${claim1.claim_id}`,doc,{
@@ -134,7 +135,7 @@ const onChnageHospitalMedExp=(e)=>{
                 'Content-Type': 'multipart/form-data'
             }
         })
-        .then((response)=>console.log(response.data))
+        .then((response)=>{console.log(response.data);alert("Claim Saved")})
         .catch((error)=>console.log(error))
       })
       .catch((error) => {
@@ -217,15 +218,20 @@ const onChnageHospitalMedExp=(e)=>{
             <div className='row mt-3'>
             <div className='col-6'>
             <h4>Documents </h4> 
-                <label className="form-label" for="customFile">(only pdf and word files are allowed)</label>
-                <input type="file" onChange={(e)=>
-                 {
-                    const formData = new FormData()
-                    if(e.target.files[0]){
-                    formData.append('file',e.target.files[0])
-                    for (var key of formData.entries()) {
-                        console.log(key[0] + ', ' + key[1])}
-                    setDoc(formData);
+                <label className="form-label" for="customFile">(only pdf and word files are allowed)</label><br/>
+                <input type="file" multiple accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+                    onChange={(e)=>
+                    {
+                        
+                        //console.log(e.target.files.length)
+                        const formData = new FormData()
+                        if(e.target.files[0]){
+                        for(var i=0;i<e.target.files.length;i++){
+                        formData.append('file',e.target.files[i])}
+                        for (var key of formData.entries()) {
+                            console.log(key[0] + ', ' + key[1])}
+                        console.log(formData)
+                        setDoc(formData);
                     }
                      
                  } 

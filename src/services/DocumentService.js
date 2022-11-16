@@ -21,6 +21,12 @@ class DocumentService {
         return axios.get(DOC_GET_URL);
     }
 
+    findDocDetails(claim_id){
+        const DOC_GET_URL = `http://localhost:9090/finddoc/${claim_id}`;
+        setupAuthenticationInterceptor()
+        return axios.get(DOC_GET_URL);
+    }
+
 }
 
 export default new DocumentService()

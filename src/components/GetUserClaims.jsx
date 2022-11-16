@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GetUserClaimsService from '../services/GetUserClaimsService';
 import AuthenticationService from '../services/AuthenticationService';
 import { Link } from 'react-router-dom';
+import Header from './Header'
 let cl=0;
 
 class GetUserClaims extends Component {
@@ -30,6 +31,7 @@ class GetUserClaims extends Component {
             }
           });
         })
+        new Header().getUserRole(true);
      }
      
      returnClaimId=(claim_id)=>{
@@ -45,15 +47,15 @@ class GetUserClaims extends Component {
         return(
         <div>
         
-            <div className='container-fluid '>    
+            <div className='container-fluid mt-3 '>    
             <div className='row'>
                 <table className='table table-striped table-bordered'>
                     <thead>
                         <tr>
                             <th>Insured Details</th>
-                            <th>Hospitalization</th>
-                            <th>Policy</th>
-                            <th>status</th>
+                            <th>Hospitalization Details</th>
+                            <th>Policy Details</th>
+                            <th>Claim Status</th>
                         </tr>
                     </thead>
 

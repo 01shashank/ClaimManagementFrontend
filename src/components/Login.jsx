@@ -3,6 +3,8 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import AuthenticationService from '../services/AuthenticationService';
 import GetUsersService from '../services/GetUsersService';
+import { Link } from 'react-router-dom';
+import Header from './Header';
 
 const Login =(props)=>{
   const navigate = useNavigate();
@@ -32,12 +34,15 @@ const Login =(props)=>{
             
             AuthenticationService.registerSuccesfulUser(username,password);
             navigate("/getuserclaims")
+            window.location.reload()
           }
           else if(auth.authority==="ADMIN"){
             console.log('Login Succesfull');
             setRole(auth.authority)
+            //new Header().getUserRole(auth.authority)
             AuthenticationService.registerSuccesfulUser(username,password);
             navigate("/getallclaims")
+            window.location.reload()
           }
         })
         
@@ -45,7 +50,8 @@ const Login =(props)=>{
       else{console.log('login failed')}
     })
     
-    window.location.reload();
+    //window.location.reload();
+    
     }
 
   return (
@@ -71,6 +77,10 @@ const Login =(props)=>{
             <div className="button-container text-center mb-5">
              <button type="button" className='btn btn-primary' onClick={loginClicked} >Submit</button>
             </div>
+
+            <div className="form-group text-center  mb-5">
+             <big type="text" className='form-control bg-info'><Link className='link-dark' to="/addauser">Not Registered yet?<br/>Click Here</Link></big>
+            </div>
           <div>
         </div>
       </form>
@@ -82,8 +92,8 @@ const Login =(props)=>{
 }
 
 export const setupAuthenticationInterceptor=()=>{
-  let username ='jigneshj@gmail.com'
-  let password= 'jignesh@123'
+  let username ="jayeshshah@gmail.com"
+  let password= 'jayesh@123'
   let basicAuthHeader= 'Basic ' + window.btoa(username + ":" + password)
 
   axios.interceptors.request.use(

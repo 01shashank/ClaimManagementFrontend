@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import GetAllClaimsService from '../services/GetAllClaimsService';
 import { setupAuthenticationInterceptor } from './Login';
+import Header from './Header';
+import history from './history';
 
 
 class GetAllUsers extends Component {
@@ -21,6 +23,23 @@ class GetAllUsers extends Component {
         });
     }
 
+    removeUser=(uid)=>{
+        console.log(uid)
+        setupAuthenticationInterceptor()
+        axios.delete(`http://localhost:9090/deleteuser/${uid}`)
+        .then((response)=>{
+            console.log(response)
+            alert("User Added Succesfully")
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        new Header().getUserRole(false);
+        
+        history.push("/getallclaims")
+        window.location.reload();
+    }
+
 
     render() {
         return (
@@ -32,9 +51,10 @@ class GetAllUsers extends Component {
                         <tr>
                             
                             <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email </th>
-                            <th>Password</th>
                             <th>Authorities</th>
+                            <th>Remove User</th>
                         </tr>
                     </thead>
 
@@ -44,10 +64,11 @@ class GetAllUsers extends Component {
                                 user =>
                                 <tr key={user.user_Id}>
                                     <td>{user.user_first_name}</td>
+                                    <td>{user.usre_last_name}</td>
                                     <td>{user.userEmail}</td>
-                                    <td>{user.user_password}</td>
+                                    
                                     <td >{user.authorities.map(authority=>authority.authority)} </td>
-                                   
+                                    <td><button type="button" onClick={()=>{this.removeUser(user.user_Id)}} className='btn btn-danger'>Remove</button></td>
                                     
                                 </tr>
                             )
