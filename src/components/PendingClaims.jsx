@@ -6,7 +6,7 @@ import history from './history'
 import ClaimsService from '../services/ClaimsService';
 let cl=0;
 
-class GetAllClaims extends Component {
+class GetPendingClaims extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -16,23 +16,10 @@ class GetAllClaims extends Component {
 
     componentDidMount(cid){
         
-        ClaimsService.getAllClaims().then((response) =>{
+        ClaimsService.getPendingClaims().then((response) =>{
             this.setState({claims:response.data});
         });
     }
-
-     deleteClaim=(cid)=>{
-        console.log(cid)
-        ClaimsService.deleteClaim(cid)
-        .then((response)=>{
-            console.log(response)
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-        window.location.reload();
-
-     }
 
      returnClaimId(claim_id){
         history.push(`/claim/${claim_id}`)
@@ -53,18 +40,16 @@ class GetAllClaims extends Component {
                             <th>Policy Details</th>
                             <th>Hospitalization Details</th>
                             <th>Claim Status</th>
-                            <th>Delete Claim</th>
                         </tr>
                     </thead>
 
                     <tbody>{
                         this.state.claims.map(
                             claim=>
-                            <tr key={claim.claim_id} onClick={()=>this.returnClaimId(claim.claim_id)} style={{cursor: "pointer"}}>
-                                <td >Policy Name: {claim.policy.policyName} <br/>Policy Start Date: {claim.policy.policy_start_date.slice(0,10)} <br/>Policy End Date: {claim.policy.policy_start_date.slice(0,10)}</td>
+                            <tr key={claim.claim_id}  onClick={()=>this.returnClaimId(claim.claim_id)} style={{cursor: "pointer"}}>
+                                <td>Policy Name: {claim.policy.policyName} <br/>Policy Start Date:  {claim.policy.policy_start_date.slice(0,10)} <br/>Policy End Date: {claim.policy.policy_start_date.slice(0,10)}</td>
                                 <td>Doctor_consulted: {claim.hospitalization.hospital_doctor} <br/>Medical_expenses: {claim.hospitalization.hospital_medical_expenses} <br/>Non_medical_expenses: {claim.hospitalization.hospital_non_medical_expenses}<br/> Reason:{claim.hospitalization.hospital_reason}</td>
                                 <td><b>{claim.claim_status}</b></td>
-                                <td><button type="button" onClick={()=>this.deleteClaim(claim.claim_id)}  className='btn btn-danger'>Delete</button></td>
                             </tr>
                                 
                             ) 
@@ -80,4 +65,4 @@ class GetAllClaims extends Component {
     }
 }
 
-export default GetAllClaims;
+export default GetPendingClaims;

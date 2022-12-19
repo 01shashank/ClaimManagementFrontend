@@ -1,30 +1,22 @@
 import axios from 'axios';
+import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 import { setupAuthenticationInterceptor } from '../components/Login';
 
 class DocumentService {
     saveDoc(claim_id,doc){
-        const DOC_SAVE_URL = `http://localhost:9090/savedoc/${claim_id}`;
-        setupAuthenticationInterceptor()
-        return axios.post(DOC_SAVE_URL,doc)
-        .then((response) => {
-            console.log(response.data);
-              // Handle data
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        const DOCS_SAVE_API_URL = `http://localhost:9090/claimmanagement/document/${claim_id}`
+        return axios.post(DOCS_SAVE_API_URL,doc,{headers:{'Content-Type': 'multipart/form-data',Authorization:sessionStorage.getItem('JWT_token')}})
     }
 
-    getDoc(claim_id){
-        const DOC_GET_URL = `http://localhost:9090/getdoc/${claim_id}`;
-        setupAuthenticationInterceptor()
-        return axios.get(DOC_GET_URL);
+    getClaimDocuments(claim_id){
+        const GET_CLAIM_DOCS_API_URL = `http://localhost:9090/claimmanagement/documentdetails/${claim_id}`
+
+        return axios.get(GET_CLAIM_DOCS_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token')}});
     }
 
-    findDocDetails(claim_id){
-        const DOC_GET_URL = `http://localhost:9090/finddoc/${claim_id}`;
-        setupAuthenticationInterceptor()
-        return axios.get(DOC_GET_URL);
+    downloadDocument(doc_id){
+        const DOWNLOAD_DOC_API_URL = `http://localhost:9090/claimmanagement/downloaddocument/${doc_id}`
+            return axios.get(DOWNLOAD_DOC_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token')}},{responseType: "blob"});
     }
 
 }

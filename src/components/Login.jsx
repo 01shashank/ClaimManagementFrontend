@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import AuthenticationService from '../services/AuthenticationService';
-import GetUsersService from '../services/GetUsersService';
 import { Link } from 'react-router-dom';
 import Header from './Header';
+import LoginService from '../services/LoginService';
+import UserService from '../services/UserService';
 
 const Login =(props)=>{
   const navigate = useNavigate();
@@ -12,45 +13,41 @@ const Login =(props)=>{
   const[password,setPassword] = useState("");
   const[Users,setUsers] = useState([]);
   const[role,setRole] = useState("");
-  
-  
-  function componentDidMount(){
-
-    GetUsersService.getUsers().then((response) =>{
-        setUsers(response.data);
-      });
-  }
-  
+ 
     
   function loginClicked(props){
-    //console.log(Users)
-    Users.forEach((User)=>{
-    if(User.userEmail===username&&User.user_password)
-      {
-        User.authorities.map(auth=>{
-          if (auth.authority==="USER") {
-            console.log('Login Succesfull');
-            setRole(auth.authority)
-            
-            AuthenticationService.registerSuccesfulUser(username,password);
+
+    LoginService.userLogin(username,password)
+    .then((response) =>{
+      AuthenticationService.registerSuccesfulUser(username,response.data.token)
+      UserService.getUserAuthorities(username).then((response)=>{
+        let roleList = response.data
+        roleList.map((role)=>{
+          if(role.authority.includes("ROLE_ADMIN")){
+            setRole(role.authority)
+            AuthenticationService.setRoleOfUser("ROLE_ADMIN")
+            navigate("/admindashboard")
+            window.location.reload()
+          }
+          else{
+            setRole(role.authority);
+            AuthenticationService.setRoleOfUser("ROLE_USER")
             navigate("/getuserclaims")
             window.location.reload()
           }
-          else if(auth.authority==="ADMIN"){
-            console.log('Login Succesfull');
-            setRole(auth.authority)
-            //new Header().getUserRole(auth.authority)
-            AuthenticationService.registerSuccesfulUser(username,password);
-            navigate("/getallclaims")
-            window.location.reload()
-          }
         })
-        
-      }
-      else{console.log('login failed')}
-    })
-    
-    //window.location.reload();
+      })
+    .catch((error)=>{
+      console.log(error.response.data);
+    });
+
+   
+  })
+  .catch((error)=>{
+    console.log(error.response.data.errormessage);
+    alert(error.response.data.errormessage)
+    window.location.reload()
+  })
     
     }
 
@@ -60,7 +57,6 @@ const Login =(props)=>{
         <div className='col-6'>
           <form className='container'>
             <div className='mt-5 mb-10'>
-              {componentDidMount()}
               <h2 className="h1 display-5 text-center">USER LOGIN</h2>
             </div>
 
@@ -90,22 +86,6 @@ const Login =(props)=>{
   );
 
 }
-
-export const setupAuthenticationInterceptor=()=>{
-  let username ="jayeshshah@gmail.com"
-  let password= 'jayesh@123'
-  let basicAuthHeader= 'Basic ' + window.btoa(username + ":" + password)
-
-  axios.interceptors.request.use(
-      (config) =>{
-          config.headers.authorization = basicAuthHeader
-      
-      return config
-      }
-  )
-}
-
-  
  
  
   

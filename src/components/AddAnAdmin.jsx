@@ -6,7 +6,7 @@ import UserService from '../services/UserService';
 
 
 
-const SaveUser =(props)=>{
+const SaveAdmin =(props)=>{
   const navigate = useNavigate();
   const[user,setUser] = useState({
         "user_Email": "",
@@ -48,7 +48,7 @@ const SaveUser =(props)=>{
     
   const submitClicked=()=>{
     console.log(user)
-    UserService.registerUser(user)
+    UserService.registerAdmin(user)
     .then((response)=>{
         console.log(response)
     })
@@ -57,7 +57,7 @@ const SaveUser =(props)=>{
     })
     if(AuthenticationService.isUserloggedIn()){
       navigate("/getallclaims")
-      alert("User Inserted Succesfully")
+      alert("Admin Inserted Succesfully")
     }
     else{
       navigate("/login")
@@ -76,7 +76,7 @@ const SaveUser =(props)=>{
         <form className='container'>
           <div className='mt-5 mb-10'>
             
-            <h2 className="h1 display-5 text-center">User Registration</h2>
+            <h2 className="h1 display-5 text-center">Add an Admin</h2>
           </div>
 
           <div className="form-group mb-3 mt-3" >
@@ -116,4 +116,4 @@ const SaveUser =(props)=>{
  
   
 
-export default SaveUser;
+export default SaveAdmin;

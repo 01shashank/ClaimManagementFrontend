@@ -9,8 +9,14 @@ import GetUserClaims from './GetUserClaims';
 import SaveC from './SaveC';
 import GetSingleClaim from './GetSingleClaim';
 import GetAllUsers from './GetAllUsers';
-import Test from './Test';
 import AddAUser from './AddAUser'
+import AdminDashboard from './AdminDashboard';
+import AddAnAdmin from './AddAnAdmin'
+import SavePolicy from './SavePolicy';
+import GetPendingClaims from './PendingClaims';
+import GetApprovedClaims from './ApprovedClaims';
+import GetRejectedClaims from './RejctedClaims';
+import GetUserPolicies from './GetUserPolicies';
 
 class ClaimManagement extends Component {
 
@@ -26,13 +32,20 @@ class ClaimManagement extends Component {
                             <Route path = "/logout" element={<Logout/>}/>
                             <Route path="/getuserclaims" element={<GetUserClaims/>}/>
                             <Route path="/savec" element={<SaveC/>}/>
-                            <Route path="/claim" element={<GetSingleClaim/>}/>
+                            <Route path="/claim/:claim_id" element={<GetSingleClaim/>}/>
                             <Route path="/getallusers" element={<GetAllUsers/>}/>
-                            <Route path="/test" element={<Test />}/>
+                            <Route path='/admindashboard' element={<AdminDashboard/>}/>
+                            <Route path='/addanadmin' element={<AddAnAdmin/>}/>
+                            <Route path='/savepolicy' element={<SavePolicy/>}/>
+                            <Route path='/getpendingclaims' element={<GetPendingClaims/>}/>
+                            <Route path='/getapprovedclaims' element={<GetApprovedClaims/>}/>
+                            <Route path='/getrejectedclaims' element={<GetRejectedClaims/>}/>
+                            <Route path='/getuserpolicies' element={<GetUserPolicies/>}/>
                             
                         </Route>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/addauser" element={<AddAUser />}/>
+                        
                         
                     </Routes>
                     </Fragment>

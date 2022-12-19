@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import GetAllClaimsService from '../services/GetAllClaimsService';
 import { setupAuthenticationInterceptor } from './Login';
 import Header from './Header';
 import history from './history';
+import UserService from '../services/UserService';
 
 
 class GetAllUsers extends Component {
@@ -15,41 +15,37 @@ class GetAllUsers extends Component {
     }
 
     componentDidMount(){
-        const GET_USERS_URL = "http://localhost:9090/getallusers";
-        setupAuthenticationInterceptor()
-        axios.get(GET_USERS_URL).then((response) =>{
+        UserService.getAllUsers().then((response) =>{
             this.setState({Users:response.data});
             
-        });
+        })
+        .catch((error)=>console.log(error));
     }
 
     removeUser=(uid)=>{
-        console.log(uid)
-        setupAuthenticationInterceptor()
-        axios.delete(`http://localhost:9090/deleteuser/${uid}`)
+        UserService.deleteUser(uid)
         .then((response)=>{
             console.log(response)
-            alert("User Added Succesfully")
+            alert("Removed User Succesfully")
+            window.location.reload()
         })
         .catch((error) => {
             console.log(error);
         });
         new Header().getUserRole(false);
         
-        history.push("/getallclaims")
-        window.location.reload();
+        
     }
 
 
     render() {
         return (
             
-            <div className='container-fluid '>
+            <div className='container-fluid mt-3'>
             <div className='row'>
                 <table className='table table-striped table-bordered'>
                     <thead>
                         <tr>
-                            
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email </th>
@@ -64,8 +60,8 @@ class GetAllUsers extends Component {
                                 user =>
                                 <tr key={user.user_Id}>
                                     <td>{user.user_first_name}</td>
-                                    <td>{user.usre_last_name}</td>
-                                    <td>{user.userEmail}</td>
+                                    <td>{user.user_last_name}</td>
+                                    <td>{user.user_Email}</td>
                                     
                                     <td >{user.authorities.map(authority=>authority.authority)} </td>
                                     <td><button type="button" onClick={()=>{this.removeUser(user.user_Id)}} className='btn btn-danger'>Remove</button></td>

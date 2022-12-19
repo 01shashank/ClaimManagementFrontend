@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import AuthenticationService from '../services/AuthenticationService';
@@ -6,20 +6,21 @@ import { Dropdown } from 'react-bootstrap';
 import Select from "react-select"
 import { setupAuthenticationInterceptor } from './Login';
 import DocumentService from '../services/DocumentService'
+import ClaimsService from '../services/ClaimsService';
+import UserService from '../services/UserService';
+import PolicyService from '../services/PolicyService';
 
 
 
 const SaveC =(props)=>{
   const navigate = useNavigate();
+  const[policies,setPolicies]=useState([])
+  const[policyItems,setPolicyItems]=useState([])
   const[doc,setDoc] = useState({});
+  let username=AuthenticationService.getLoggedUsername()
+  var user_id = sessionStorage.getItem('user_id')
   const[claim,setClaim] = useState({
-      policy:{policy_Id:0},
-      insured:{
-          insured_name:"",
-          insured_phone:0,
-          insured_age:0,
-          insured_relationship:""
-      },
+      policy:{},
       hospitalization:{
           hospital_doctor:"",
           hospital_medical_expenses:0,
@@ -27,47 +28,19 @@ const SaveC =(props)=>{
           hospital_reason:""
       }
   });
+  
 
-
-  const onChnageInsuredName=(e)=>{
-    setClaim({
-        ...claim,
-        insured:{
-            ...claim.insured,
-            [e.target.name]:e.target.value
-        }
-    });
-}
-
-const onChnageInsuredPhone=(e)=>{
-    setClaim({
-        ...claim,
-        insured:{
-            ...claim.insured,
-            [e.target.name]:parseInt( e.target.value)
-        }
-    });
-}
-
-const onChnageInsuredAge=(e)=>{
-    setClaim({
-        ...claim,
-        insured:{
-            ...claim.insured,
-            [e.target.name]:parseInt( e.target.value)
-        }
-    });
-}
-
-const onChnageInsuredRel=(e)=>{
-    setClaim({
-        ...claim,
-        insured:{
-            ...claim.insured,
-            [e.target.name]:e.target.value
-        }
-    });
-}
+  useEffect(()=>{
+    
+    PolicyService.getUserPolicies(user_id).then((response)=>{
+        setPolicies(response.data)
+    
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+  })
+  
 
 const onChnageHospitalDoctor=(e)=>{
     setClaim({
@@ -112,41 +85,29 @@ const onChnageHospitalMedExp=(e)=>{
 
     
   const submitClicked=(e)=>{
-    let username=AuthenticationService.getLoggedUsername()
-    // let file = e.target.files[0];
-    // console.log(file);
-    // console.log(username)
-    // console.log(claim)
-    // console.log(typeof claim.policy.policy_Id)
-    //console.log(claim)
-    const POST_CLAIM_URL = `http://localhost:9090/saveclaim/${username}`;
-    
+       // console.log(claim)
 
-    setupAuthenticationInterceptor()
-    axios.post(POST_CLAIM_URL,claim
-    )
-      .then((response) => {
-        //console.log(response.data);
-        
-        let claim1= response.data;
-        console.log(claim1)
-        axios.post(`http://localhost:9090/savedoc/${claim1.claim_id}`,doc,{
-            headers:{
-                'Content-Type': 'multipart/form-data'
-            }
+        ClaimsService.postClaim(user_id,claim)
+        .then((response) => {
+            console.log(response.data);
+            
+            let claim1= response.data;
+            console.log(claim1)
+            DocumentService.saveDoc(claim1.claim_id,doc)
+            .then((response)=>{console.log(response.data);alert("Claim Saved")})
+            .catch((error)=>console.log(error.data))
         })
-        .then((response)=>{console.log(response.data);alert("Claim Saved")})
-        .catch((error)=>console.log(error))
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+            console.log(error.response.data);
+            alert(error.response.data)
+        });
 
-      
-      navigate("/getuserclaims")
+        
+        navigate("/getuserclaims")
 
-      
-      window.location.reload()
+        
+        window.location.reload()
+        
     
   }
 
@@ -154,39 +115,33 @@ const onChnageHospitalMedExp=(e)=>{
 
   return (
     <form className='form-inline'>
-        <div className='mt-3'><h4>Insured Person's details</h4> 
-            <div className='row'>
-                <div className='form-group col-6 mt-1'> 
-                    <label> Name of Person</label>
-                    <input type="text" name="insured_name" value={claim.insured.insured_name} onChange={onChnageInsuredName} className="form-control input-group-lg reg_name"  placeholder="Enter the name of Insured person"/>
-                </div>
-                <div className='form-group col-6 mt-1'> 
-                    <label>Contact Number</label>
-                    <input type="number" name="insured_phone" value={claim.insured.insured_phone} onChange={onChnageInsuredPhone} className="form-control input-group-lg reg_name"  placeholder="Enter the contact number of Insured person"/>
-                </div> 
-            </div>
-            <div className='row'>
-                <div className='form-group col-6 mt-1'> 
-                    <label> Age</label>
-                    <input type="number" name="insured_age" value={claim.insured.insured_age} onChange={onChnageInsuredAge} className="form-control input-group-lg reg_name"  placeholder="Enter age of the Insured person"/>
-                </div>
-                <div className='form-group col-6'> 
-                    <label>Relationship </label>
-                    <input type="text" name="insured_relationship" value={claim.insured.insured_relationship} onChange={onChnageInsuredRel} className="form-control input-group-lg reg_name"  placeholder="Enter relationship with Insured person"/>
-                </div>
-            </div>
-        </div>
+        
 
         <div className='mt-3'><h4>Policy details</h4>
             <div >
-                <label> Policy Name</label> 
+                <label className='mb-2'>Select Policy Name</label> 
                 <div className='row'>
                     <div className='form-group col-6'> 
-                        <select onChange={(e=>setClaim({...claim,policy:{...claim.policy,policy_Id:parseInt(e.target.value)}}))}>
-                            <option disabled selected={true}>Select a policy</option>
-                            <option label='Standard Plan' value="1">Standard Plan</option>
-                            <option label='Gold Plan' value="2">Gold Plan</option>
-                            <option label='Premium Plan' value="3">Premium Plan</option>
+                        <select onChange={(e=>{
+                            policies.map(policy=>{
+                                if(policy.policyName===e.target.value){
+                                    
+                                    let pol = policy
+                                    setClaim({...claim,policy:pol})
+                                    console.log(policy)
+                                }
+                            })
+                        }
+                            )}>
+                            <option disabled selected={true}>Select Your Policy</option>
+                            {
+                                policies.map(option => 
+                                    <option label={option.policyName}  value={option.policyName} >                                  
+                                        {option.policyName}
+                                    </option>
+                                )
+                            }
+                        );
                         </select>
                     </div>
                 </div>
@@ -239,9 +194,10 @@ const onChnageHospitalMedExp=(e)=>{
                 </div>
             </div>
             <div className="button-container text-center mt-3 mb-3">
-                <button type="button" onClick={submitClicked} className='btn btn-primary'>Submit</button>
+                <button type="button" onClick={submitClicked} className='btn btn-primary btn-lg'>Submit</button>
             </div>
-
+        
+        
         </div>
     </form>
 );
