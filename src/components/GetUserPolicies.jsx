@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import AuthenticationService from '../services/AuthenticationService';
-import Header from './Header'
 import UserService from '../services/UserService';
-import history from './history';
 import PolicyService from '../services/PolicyService';
 
 
@@ -34,13 +32,6 @@ class GetUserPolicies extends Component {
        
      }
      
-     returnClaimId=(claim_id)=>{
-        
-        // history.push(`/claim/${claim_id}`)
-        // window.location.reload()
-
-     }
-
 
     render(){
         return(

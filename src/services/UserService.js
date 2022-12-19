@@ -1,5 +1,4 @@
 import axios from 'axios';
-import AuthenticationService from './AuthenticationService';
 
 const USER_REG_API_URL = "http://localhost:9090/claimmanagement/adduser";
 const ADMIN_REG_API_URL = "http://localhost:9090/claimmanagement/admin/addadmin";
@@ -25,11 +24,6 @@ class UserService {
     getUserById(user_id){
         const GET_USER_BY_ID_API_URL = `http://localhost:9090/claimmanagement/user/${user_id}`;
         return axios.get(GET_USER_BY_ID_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token')}});
-    }
-
-    updateUser(user_id,user){
-        const UPDATE_USER_API_URL = `http://localhost:9090/claimmanagement/admin/updateuser/${user_id}`;
-        return axios.put(UPDATE_USER_API_URL,user,{headers:{Authorization:sessionStorage.getItem('JWT_token')}});
     }
 
     deleteUser(user_id){

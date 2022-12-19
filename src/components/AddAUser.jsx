@@ -5,7 +5,6 @@ import AuthenticationService from '../services/AuthenticationService';
 import UserService from '../services/UserService';
 
 
-
 const SaveUser =(props)=>{
   const navigate = useNavigate();
   const[user,setUser] = useState({
@@ -23,47 +22,50 @@ const SaveUser =(props)=>{
         })
         
     }
-    const onChnageLastName=(e)=>{
+
+  const onChnageLastName=(e)=>{
+      setUser({
+          ...user,
+          [e.target.name]:e.target.value
+          })
+          
+      }
+
+  const onChnageEmail=(e)=>{
+      setUser({
+          ...user,
+          [e.target.name]:e.target.value
+          })
+          
+      }
+
+    const onChnagePassword=(e)=>{
         setUser({
             ...user,
             [e.target.name]:e.target.value
             })
             
         }
-        const onChnageEmail=(e)=>{
-            setUser({
-                ...user,
-                [e.target.name]:e.target.value
-                })
-                
-            }
-            const onChnagePassword=(e)=>{
-                setUser({
-                    ...user,
-                    [e.target.name]:e.target.value
-                    })
-                    
-                }
 
     
   const submitClicked=()=>{
     console.log(user)
     UserService.registerUser(user)
-    .then((response)=>{
-        console.log(response)
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-    if(AuthenticationService.isUserloggedIn()){
-      navigate("/getallclaims")
-      alert("User Inserted Succesfully")
-    }
-    else{
-      navigate("/login")
-      alert("Credentials Added")
-    }
-    window.location.reload()
+      .then((response)=>{
+          console.log(response)
+      })
+      .catch((error)=>{
+          console.log(error)
+      })
+      if(AuthenticationService.isUserloggedIn()){
+        navigate("/getallclaims")
+        alert("User Inserted Succesfully")
+      }
+      else{
+        navigate("/login")
+        alert("Credentials Added")
+      }
+      window.location.reload()
   }
 
 

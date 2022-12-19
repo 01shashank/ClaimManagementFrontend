@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import AuthenticationService from '../services/AuthenticationService';
-import Header from './Header'
 import UserService from '../services/UserService';
 import history from './history';
-let cl=0;
 
 class GetUserClaims extends Component {
    
@@ -32,15 +30,10 @@ class GetUserClaims extends Component {
      }
      
      returnClaimId=(claim_id)=>{
-        // cl = claim_id;
-        // this.getUserSingleClaim()
         history.push(`/claim/${claim_id}`)
         window.location.reload()
 
      }
-
-    getUserSingleClaim(){console.log(cl);return cl;}
-
       
 
     render(){

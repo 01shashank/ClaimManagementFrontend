@@ -4,7 +4,6 @@ import GetSingleClaim from './GetSingleClaim';
 import Header from './Header'
 import ClaimsService from '../services/ClaimsService';
 import history from './history'
-let cl=0;
 
 class AdminDashboard extends Component {
     constructor(props){
@@ -20,25 +19,21 @@ class AdminDashboard extends Component {
     componentDidMount(cid){
         ClaimsService.getTotalClaimsCount().then((response)=>{
             this.setState({total_claims:parseInt(response.data)})
-           // console.log("toal claims: ",this.state.total_claims)
             console.log(response.data)
         })
 
         ClaimsService.getPendingClaimsCount().then((response)=>{
             this.setState({pending_claims:parseInt(response.data)})
-            //console.log("pending claims: ",this.state.pending_claims)
             console.log(response.data)
         })
 
         ClaimsService.getApprovedClaimsCount().then((response)=>{
             this.setState({approved_claims:parseInt(response.data)})
-            //console.log("approved claims: ",this.state.approved_claims)
             console.log(response.data)
         })
 
          ClaimsService.getRejectedClaimsCount().then((response)=>{
             this.setState({rejected_claims:parseInt(response.data)})
-            //console.log("rejected claims: ",this.state.rejected_claims)
             console.log(response.data)
         })
         
@@ -69,8 +64,6 @@ class AdminDashboard extends Component {
         return (
             
             <div className='container mt-4 '>
-
-
                 <div className='row '>
                     <div className='col-3 mt-1'> 
                         <div className="card  bg-success" onClick={()=>this.getAllClaims()}  style={{width: "10rem",height:"8rem",color:"black",cursor: "pointer"}}>

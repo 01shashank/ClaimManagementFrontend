@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { setupAuthenticationInterceptor } from './Login';
 import Header from './Header';
-import history from './history';
 import UserService from '../services/UserService';
 
 
@@ -37,7 +34,6 @@ class GetAllUsers extends Component {
         
     }
 
-
     render() {
         return (
             
@@ -65,7 +61,6 @@ class GetAllUsers extends Component {
                                     
                                     <td >{user.authorities.map(authority=>authority.authority)} </td>
                                     <td><button type="button" onClick={()=>{this.removeUser(user.user_Id)}} className='btn btn-danger'>Remove</button></td>
-                                    
                                 </tr>
                             )
                         }

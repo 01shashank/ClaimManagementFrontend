@@ -24,7 +24,7 @@ const Login =(props)=>{
         let roleList = response.data
         roleList.map((role)=>{
           if(role.authority.includes("ROLE_ADMIN")){
-            setRole(role.authority)
+            setRole("ROLE_ADMIN")
             AuthenticationService.setRoleOfUser("ROLE_ADMIN")
             navigate("/admindashboard")
             window.location.reload()

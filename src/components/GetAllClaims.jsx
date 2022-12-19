@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import GetSingleClaim from './GetSingleClaim';
-import Header from './Header'
 import history from './history'
 import ClaimsService from '../services/ClaimsService';
-let cl=0;
 
 class GetAllClaims extends Component {
     constructor(props){
@@ -60,10 +56,10 @@ class GetAllClaims extends Component {
                     <tbody>{
                         this.state.claims.map(
                             claim=>
-                            <tr key={claim.claim_id} onClick={()=>this.returnClaimId(claim.claim_id)} style={{cursor: "pointer"}}>
-                                <td >Policy Name: {claim.policy.policyName} <br/>Policy Start Date: {claim.policy.policy_start_date.slice(0,10)} <br/>Policy End Date: {claim.policy.policy_start_date.slice(0,10)}</td>
-                                <td>Doctor_consulted: {claim.hospitalization.hospital_doctor} <br/>Medical_expenses: {claim.hospitalization.hospital_medical_expenses} <br/>Non_medical_expenses: {claim.hospitalization.hospital_non_medical_expenses}<br/> Reason:{claim.hospitalization.hospital_reason}</td>
-                                <td><b>{claim.claim_status}</b></td>
+                            <tr key={claim.claim_id}>
+                                <td  onClick={()=>this.returnClaimId(claim.claim_id)} style={{cursor: "pointer"}} >Policy Name: {claim.policy.policyName} <br/>Policy Start Date: {claim.policy.policy_start_date.slice(0,10)} <br/>Policy End Date: {claim.policy.policy_start_date.slice(0,10)}</td>
+                                <td  onClick={()=>this.returnClaimId(claim.claim_id)} style={{cursor: "pointer"}}>Doctor_consulted: {claim.hospitalization.hospital_doctor} <br/>Medical_expenses: {claim.hospitalization.hospital_medical_expenses} <br/>Non_medical_expenses: {claim.hospitalization.hospital_non_medical_expenses}<br/> Reason:{claim.hospitalization.hospital_reason}</td>
+                                <td  onClick={()=>this.returnClaimId(claim.claim_id)} style={{cursor: "pointer"}}><b>{claim.claim_status}</b></td>
                                 <td><button type="button" onClick={()=>this.deleteClaim(claim.claim_id)}  className='btn btn-danger'>Delete</button></td>
                             </tr>
                                 

@@ -1,12 +1,9 @@
-import React, { useEffect,Component } from 'react';
+import React, { useEffect } from 'react';
 import AuthenticationService from '../services/AuthenticationService';
-import GetAllClaims from './GetAllClaims';
-import GetUserClaims from './GetUserClaims';
 import UserService from '../services/UserService';
 import { useState } from 'react';
-import history from './history';
 import DocumentService from '../services/DocumentService';
-import { Link, useSearchParams,useParams } from 'react-router-dom';
+import { Link,useParams } from 'react-router-dom';
 import ClaimsService from '../services/ClaimsService';
 import fileDownload from 'js-file-download';
 
@@ -81,8 +78,6 @@ const GetSingleClaim =(props)=> {
         .catch((error) => {
             console.log(error);
         });
-    //     history.push("/getallclaims")
-    //     window.location.reload();
      }
 
     const rejected=(claim_id,statandreason)=>{
@@ -142,7 +137,8 @@ const GetSingleClaim =(props)=> {
                     
                     <div className='form-group mt-3 mb-3'>
                     <h3 className='mb-3'>Uploaded Document</h3>
-                    <big className='mr-3'>Click to download the file</big>
+                    {docs.length!==0 && <big className='mr-3'>Click to download the file<br/></big>}
+                    {docs.length===0 && <h5>No Docs Submitted</h5>}
                     <Link>
                         {docs.map(
                             doc=>
@@ -150,7 +146,8 @@ const GetSingleClaim =(props)=> {
                             <div onClick={()=>{openDoc(doc.doc_id,doc.docname)}}>{doc.docname}</div>
                             
                         )}
-                    </Link> 
+                    </Link>
+                     
                     </div>
 
                     <div className='form-group mt-3 row' >

@@ -21,7 +21,7 @@ class GetApprovedClaims extends Component {
         });
     }
 
-     returnClaimId(claim_id){
+    returnClaimId(claim_id){
         history.push(`/claim/${claim_id}`)
         window.location.reload()
      }

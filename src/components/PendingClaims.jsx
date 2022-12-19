@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import GetSingleClaim from './GetSingleClaim';
-import Header from './Header'
 import history from './history'
 import ClaimsService from '../services/ClaimsService';
-let cl=0;
 
 class GetPendingClaims extends Component {
     constructor(props){

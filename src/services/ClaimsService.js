@@ -40,10 +40,6 @@ class ClaimsService {
         return axios.get(GET_CLAIM_BY_ID_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token')}});
     }
 
-    updateClaim(claim_id,claim){
-        const UPDATE_CLAIM_API_URL = `http://localhost:9090/claimmanagement/claim/update/${claim_id}`
-        return axios.put(UPDATE_CLAIM_API_URL,claim,{headers:{Authorization:sessionStorage.getItem('JWT_token')}});
-    }
     deleteClaim(claim_id){
         const DELETE_CLAIM_API_URL = `http://localhost:9090/claimmanagement/admin/deleteclaim/${claim_id}`
         return axios.delete(DELETE_CLAIM_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token')}});

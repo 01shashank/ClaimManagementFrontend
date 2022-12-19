@@ -5,7 +5,6 @@ import AuthenticationService from '../services/AuthenticationService';
 import UserService from '../services/UserService';
 
 
-
 const SaveAdmin =(props)=>{
   const navigate = useNavigate();
   const[user,setUser] = useState({
@@ -23,48 +22,54 @@ const SaveAdmin =(props)=>{
         })
         
     }
-    const onChnageLastName=(e)=>{
-        setUser({
-            ...user,
-            [e.target.name]:e.target.value
-            })
-            
-        }
-        const onChnageEmail=(e)=>{
-            setUser({
-                ...user,
-                [e.target.name]:e.target.value
-                })
-                
-            }
-            const onChnagePassword=(e)=>{
-                setUser({
-                    ...user,
-                    [e.target.name]:e.target.value
-                    })
-                    
-                }
+
+
+  const onChnageLastName=(e)=>{
+      setUser({
+          ...user,
+          [e.target.name]:e.target.value
+          })
+          
+      }
+
+
+  const onChnageEmail=(e)=>{
+      setUser({
+          ...user,
+          [e.target.name]:e.target.value
+          })
+          
+      }
+
+
+  const onChnagePassword=(e)=>{
+      setUser({
+          ...user,
+          [e.target.name]:e.target.value
+          })
+          
+      }
 
     
   const submitClicked=()=>{
     console.log(user)
     UserService.registerAdmin(user)
-    .then((response)=>{
-        console.log(response)
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-    if(AuthenticationService.isUserloggedIn()){
-      navigate("/getallclaims")
-      alert("Admin Inserted Succesfully")
+      .then((response)=>{
+          console.log(response)
+      })
+      .catch((error)=>{
+          console.log(error)
+      })
+      if(AuthenticationService.isUserloggedIn()){
+        navigate("/getallclaims")
+        alert("Admin Inserted Succesfully")
+      }
+      else{
+        navigate("/login")
+        alert("Credentials Added")
+      }
+        window.location.reload()
     }
-    else{
-      navigate("/login")
-      alert("Credentials Added")
-    }
-    window.location.reload()
-  }
 
 
 
@@ -75,7 +80,6 @@ const SaveAdmin =(props)=>{
       <div className='col-6'>
         <form className='container'>
           <div className='mt-5 mb-10'>
-            
             <h2 className="h1 display-5 text-center">Add an Admin</h2>
           </div>
 
@@ -111,9 +115,6 @@ const SaveAdmin =(props)=>{
 );
 }
 
-  
- 
- 
   
 
 export default SaveAdmin;
