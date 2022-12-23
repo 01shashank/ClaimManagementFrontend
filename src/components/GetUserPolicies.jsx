@@ -16,7 +16,7 @@ class GetUserPolicies extends Component {
     }
     
 
-     componentDidMount(){
+    componentDidMount(){
          
         let username = AuthenticationService.getLoggedUsername()
         UserService.getUserId(username).then((response)=>{

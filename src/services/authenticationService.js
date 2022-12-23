@@ -51,13 +51,6 @@ class authenticationService{
             return User
     }
 
-    // isUserAdmin(){
-    //     console.log(role);
-    //     if(role==="ADMIN"){
-    //         return false;
-    //     }
-    //     else return true;
-    // }
 
 }
 

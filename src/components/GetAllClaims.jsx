@@ -17,7 +17,7 @@ class GetAllClaims extends Component {
         });
     }
 
-     deleteClaim=(cid)=>{
+    deleteClaim=(cid)=>{
         console.log(cid)
         ClaimsService.deleteClaim(cid)
         .then((response)=>{
@@ -30,7 +30,7 @@ class GetAllClaims extends Component {
 
      }
 
-     returnClaimId(claim_id){
+    returnClaimId(claim_id){
         history.push(`/claim/${claim_id}`)
         window.location.reload()
      }

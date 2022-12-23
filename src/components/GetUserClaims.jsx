@@ -16,7 +16,7 @@ class GetUserClaims extends Component {
     }
     
 
-     componentDidMount(){
+    componentDidMount(){
          
         let username = AuthenticationService.getLoggedUsername()
         UserService.getUserId(username).then((response)=>{
@@ -29,7 +29,7 @@ class GetUserClaims extends Component {
        
      }
      
-     returnClaimId=(claim_id)=>{
+    returnClaimId=(claim_id)=>{
         history.push(`/claim/${claim_id}`)
         window.location.reload()
 

@@ -59,21 +59,10 @@ const GetSingleClaim =(props)=> {
 
     const openDoc=(doc_id,docname)=>{
         
-        // window.open(`http://localhost:9090/claimmanagement/downloaddocument/${doc_id}` ,'_self')
         DocumentService.downloadDocument(doc_id)
         .then((res)=>{
             console.log(res.data)
-            //fileDownload(res.data, docname)
-        //     const blob = new Blob([res.data]);
-        //     const fileName = `${docname}`;
-        //         const link = document.createElement('a');
-        //         const url = URL.createObjectURL(blob);
-        //         link.setAttribute('href', url);
-        //         link.setAttribute('download', fileName);
-        //         link.style.visibility = 'hidden';
-        //         document.body.appendChild(link);
-        //         link.click();
-        //         document.body.removeChild(link);
+            fileDownload(res.data, docname)
                 
         });
      
@@ -81,7 +70,6 @@ const GetSingleClaim =(props)=> {
         
     }
 
-       
 
     const accepted=(cid,statusandreason)=>{
         ClaimsService.changeClaimStatus(cid,statusandreason)
@@ -101,8 +89,6 @@ const GetSingleClaim =(props)=> {
         .catch((error) => {
             console.log(error);
         });
-        // history.push("/getallclaims")
-        // window.location.reload();
 
     }
 
