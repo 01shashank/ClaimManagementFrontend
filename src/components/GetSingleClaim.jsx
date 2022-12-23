@@ -58,10 +58,23 @@ const GetSingleClaim =(props)=> {
     )
 
     const openDoc=(doc_id,docname)=>{
-
+        
+        // window.open(`http://localhost:9090/claimmanagement/downloaddocument/${doc_id}` ,'_self')
         DocumentService.downloadDocument(doc_id)
         .then((res)=>{
-            fileDownload(res.data, docname)
+            console.log(res.data)
+            //fileDownload(res.data, docname)
+        //     const blob = new Blob([res.data]);
+        //     const fileName = `${docname}`;
+        //         const link = document.createElement('a');
+        //         const url = URL.createObjectURL(blob);
+        //         link.setAttribute('href', url);
+        //         link.setAttribute('download', fileName);
+        //         link.style.visibility = 'hidden';
+        //         document.body.appendChild(link);
+        //         link.click();
+        //         document.body.removeChild(link);
+                
         });
      
     
@@ -142,9 +155,10 @@ const GetSingleClaim =(props)=> {
                     <Link>
                         {docs.map(
                             doc=>
+                            <div>
                             
                             <div onClick={()=>{openDoc(doc.doc_id,doc.docname)}}>{doc.docname}</div>
-                            
+                            </div>
                         )}
                     </Link>
                      

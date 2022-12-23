@@ -85,7 +85,8 @@ const onChnageHospitalMedExp=(e)=>{
 
     
   const submitClicked=(e)=>{
-       // console.log(claim)
+        // console.log(claim);
+        // console.log(doc);
 
         ClaimsService.postClaim(user_id,claim)
         .then((response) => {
@@ -178,7 +179,7 @@ const onChnageHospitalMedExp=(e)=>{
                     onChange={(e)=>
                     {
                         
-                        //console.log(e.target.files.length)
+                        console.log(e.target.files.length)
                         const formData = new FormData()
                         if(e.target.files[0]){
                         for(var i=0;i<e.target.files.length;i++){

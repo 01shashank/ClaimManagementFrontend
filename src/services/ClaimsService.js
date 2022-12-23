@@ -50,10 +50,6 @@ class ClaimsService {
         return axios.put(CHANGE_CLAIM_STATUS_API_URL,statusAndReason,{headers:{Authorization:sessionStorage.getItem('JWT_token')}});
     }
 
-    deleteNomineeOfClaim(nominee_id){
-        const DELETE_NOMINEE_API_URL = `http://localhost:9090/claimmanagement/claim/removenominee/${nominee_id}`
-        return axios.delete(DELETE_NOMINEE_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token')}})
-    }
 
     getTotalClaimsCount(){
         return axios.get(COUNT_OF_TOTAL_CLAIMS,{headers:{Authorization:sessionStorage.getItem('JWT_token')}})

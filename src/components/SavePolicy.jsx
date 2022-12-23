@@ -60,10 +60,12 @@ const SavePolicy =(props)=>{
         var user_id = sessionStorage.getItem('user_id')
         PolicyService.addPolicy(user_id,policy)
         .then((response) => {
-            console.log(response.data)
+            console.log(response.data);
+            alert("Policy Details Saved")
         })
         .catch((error) => {
             console.log(error);
+            alert(error.response.data)
         });
 
         

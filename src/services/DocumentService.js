@@ -16,7 +16,7 @@ class DocumentService {
 
     downloadDocument(doc_id){
         const DOWNLOAD_DOC_API_URL = `http://localhost:9090/claimmanagement/downloaddocument/${doc_id}`
-            return axios.get(DOWNLOAD_DOC_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token')}},{responseType: "blob"});
+            return axios.get(DOWNLOAD_DOC_API_URL,{headers:{Authorization:sessionStorage.getItem('JWT_token'),"type":"application/pdf"}},{responseType: "arraybuffer"});
     }
 
 }
